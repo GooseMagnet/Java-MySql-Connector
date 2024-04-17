@@ -8,7 +8,7 @@ import java.util.List;
 
 public class JdbcMySqlConnector implements MySqlConnector {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/db?serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://localhost:3306?serverTimezone=UTC&useSSL=false";
     private static final String SHOW_SCHEMAS = "SHOW SCHEMAS";
     private static final String COLUMN = "Database";
 
@@ -21,15 +21,15 @@ public class JdbcMySqlConnector implements MySqlConnector {
     }
 
     public JdbcMySqlConnector() {
-        this("user", "password");
+        this("root", "password");
     }
 
     @Override
     public List<String> getSchemas() {
         try (Connection connection = DriverManager.getConnection(URL, username, password);
              PreparedStatement ps = connection.prepareStatement(SHOW_SCHEMAS);
-             ResultSet rs = ps.executeQuery()) {
-
+             ResultSet rs = ps.executeQuery()
+        ) {
             List<String> schemas = new ArrayList<>();
             while (rs.next()) {
                 schemas.add(rs.getString(COLUMN));
