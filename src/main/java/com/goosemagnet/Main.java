@@ -2,15 +2,7 @@ package com.goosemagnet;
 
 import com.goosemagnet.connectors.MySqlConnector;
 import com.goosemagnet.connectors.goose.GooseMySqlConnector;
-import com.goosemagnet.connectors.jdbc.JdbcMySqlConnector;
-import com.mysql.cj.protocol.Security;
 import lombok.SneakyThrows;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.util.Arrays;
 
 public class Main {
 
@@ -20,4 +12,19 @@ public class Main {
 //        MySqlConnector db = new JdbcMySqlConnector();
         db.getSchemas().forEach(System.out::println);
     }
+
+    /*
+    Both connectors give the same output
+    1:hi
+    2:yo
+    3:sup
+    4:hey
+    5:hello
+    6:greetings
+    7:salutations
+    8:shalom
+    9:salaam
+    10:privet
+    11:nihao
+    */
 }

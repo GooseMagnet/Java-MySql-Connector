@@ -2,6 +2,8 @@ package com.goosemagnet.connectors.goose.protocol.cs;
 
 import lombok.Value;
 
+import java.math.BigInteger;
+
 public interface Types {
 
     @Value
@@ -22,6 +24,11 @@ public interface Types {
     @Value
     class Int4 {
         long value;
+    }
+
+    @Value
+    class LengthEncodedInteger {
+        BigInteger value;
     }
 
     @Value

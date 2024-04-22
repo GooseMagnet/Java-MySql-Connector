@@ -4,6 +4,8 @@ import com.goosemagnet.connectors.goose.protocol.cs.ByteParser;
 import com.goosemagnet.connectors.goose.protocol.cs.Capabilities;
 import com.goosemagnet.connectors.goose.protocol.cs.CharacterSet;
 import com.goosemagnet.connectors.goose.protocol.cs.ServerStatus;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.SneakyThrows;
 import lombok.Value;
@@ -20,6 +22,7 @@ import com.goosemagnet.connectors.goose.protocol.cs.Types.NullTerminatedString;
 
 @Value
 @Builder(setterPrefix = "with")
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class HandshakeV10 implements Message {
     Int1 protocolVersion;
     NullTerminatedString serverVersion;
@@ -33,7 +36,7 @@ public class HandshakeV10 implements Message {
     @SneakyThrows
     public static HandshakeV10 fromInputStream(InputStream is) {
         // Server Greeting
-        Int3 greetingLength = ByteParser.parseInt3(is);
+        Int3 packetLength = ByteParser.parseInt3(is);
         Int1 packetId = ByteParser.parseInt1(is);
         Int1 protocolVersion = ByteParser.parseInt1(is);
         NullTerminatedString serverVersion = ByteParser.nullTerminatedString(is);

@@ -9,8 +9,7 @@ import java.util.List;
 public class JdbcMySqlConnector implements MySqlConnector {
 
     private static final String URL = "jdbc:mysql://localhost:3306?serverTimezone=UTC&useSSL=false";
-    private static final String SHOW_SCHEMAS = "SHOW SCHEMAS";
-    private static final String COLUMN = "Database";
+    private static final String SHOW_SCHEMAS = "Select * from db.hello";
 
     private final String username;
     private final String password;
@@ -32,7 +31,7 @@ public class JdbcMySqlConnector implements MySqlConnector {
         ) {
             List<String> schemas = new ArrayList<>();
             while (rs.next()) {
-                schemas.add(rs.getString(COLUMN));
+                schemas.add(rs.getInt("id") + ":" + rs.getString("hello"));
             }
             return schemas;
         } catch (SQLException sqle) {

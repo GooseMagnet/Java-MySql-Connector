@@ -5,8 +5,10 @@ import com.goosemagnet.connectors.goose.protocol.cs.Capabilities;
 import com.goosemagnet.connectors.goose.protocol.cs.CharacterSet;
 import com.mysql.cj.exceptions.AssertionFailedException;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.nio.charset.StandardCharsets;
@@ -21,8 +23,10 @@ import com.goosemagnet.connectors.goose.protocol.cs.Types.NullTerminatedString;
 
 @Value
 @Builder(setterPrefix = "with")
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginRequest implements Message {
 
+    private static final Int1 PACKET_NUMBER = new Int1(1);
     private static final Int1 MYSQL_NATIVE_PASSWORD_LENGTH = new Int1(32);
     private static final Int4 MAX_PACKET_SIZE = new Int4(16777215);
     private static final Set<Capabilities> CLIENT_CAPABILITIES = Set.of(
@@ -76,7 +80,7 @@ public class LoginRequest implements Message {
 
         return new ByteArrayBuilder()
                 .putInt3(new Int3(loginRequest.length))
-                .putInt1(new Int1(1))
+                .putInt1(PACKET_NUMBER)
                 .putBytes(loginRequest)
                 .toByteArray();
     }

@@ -11,6 +11,7 @@ import lombok.SneakyThrows;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
@@ -36,6 +37,20 @@ public final class ByteParser {
     public static Int4 parseInt4(InputStream is) {
         long value = fixedLengthInteger(4, is);
         return new Int4(value);
+    }
+
+
+    /*
+        Greater or equal   Lower than	Stored as
+        0	               251	        1-byte integer
+        251	               216	        0xFC + 2-byte integer
+        216	               224	        0xFD + 3-byte integer
+        224	               264	        0xFE + 8-byte integer
+     */
+    public static Types.LengthEncodedInteger parseLengthEncodedInteger(InputStream is) {
+        // TODO
+        byte value = readByte(is);
+        return new Types.LengthEncodedInteger(new BigInteger(String.valueOf(value)));
     }
 
     @SneakyThrows
@@ -69,5 +84,9 @@ public final class ByteParser {
             bytes[i] = readByte(is);
         }
         return bytes;
+    }
+
+    public static String parseLengthEncodedString() {
+        return null;
     }
 }
